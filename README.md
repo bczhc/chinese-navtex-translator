@@ -4,8 +4,9 @@ chinese-navtex-translator
 Translate Chinese NAVTEX messages in "Chinese telegraph code" or
 "GB/T 18766-2009" format into readable text.
 
-For the potential copyright issue, dictionary `18766-2009.txt` is
-not included in this project (sorry..). You can obtain it from <https://github.com/frank-1225/Chinese-Navtex-Translator>,
+For the potential copyright issue (since it's a "NO LICENSE" and `GB/T 18766-2009` is not publicly accessible),
+dictionary `18766-2009.txt` is
+not included in this project (sorry..). You can obtain it from [frank-1225/Chinese-Navtex-Translator](https://github.com/frank-1225/Chinese-Navtex-Translator),
 converting the `xlsx` file to a `<key>\t<value>` table and putting
 under the `dict` directory. (btw I'm also interested on how the linked
 repository owner obtain such a dictionary file. I searched a lot, just
