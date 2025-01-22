@@ -1,2 +1,52 @@
 #!/bin/env ruby
 
+require_relative 'lib'
+
+$dict = parse_dict 'dict/chinese-telegraph.txt'
+
+# @param text [String]
+def decode(text)
+  pos = 0
+  out = ''
+  while pos < text.length
+    # the parenthesized text is escaped
+    if text[pos] == '('
+      # find the paired parenthesis
+      index = text[pos..].index(')')
+      fail 'Malformed text: unpaired parenthesis' if index == nil
+      out += text[(pos + 1)...(pos + index)]
+      pos += (1 + index)
+      next
+    end
+
+    # skip spaces
+    if text[pos] == ' '
+      pos += 1
+      next
+    end
+
+    # simply decode the four-grouped numbers
+    number_str = text[pos...(pos + 4)]
+    mapped = $dict[number_str]
+    out += if mapped == nil
+             '?'
+           else
+             mapped
+           end
+    pos += 4
+  end
+  out
+end
+
+params = Params.default
+params.start = 'N/W:'
+params.header_lines = 2
+telegrams = Telegram.parse(File.read('samples/telegraph-code-navtex.txt'), params)
+
+telegrams.each do |t|
+  puts t.header
+  assembled = t.body.join("\n").gsub(/\n+/, '')
+  puts decode assembled
+  puts params.end
+  puts
+end

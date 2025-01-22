@@ -2,31 +2,7 @@
 
 require_relative 'lib'
 
-def parse_dict
-  map = {}
-  File.readlines('dict/18766-2009.txt', chomp: true).each do |line|
-    split = line.split("\t")
-    map[split[0]] = split[1]
-  end
-  map
-end
-
-$dict = parse_dict
-
-text = 'AHWAHXAHWAHSAHXAIAAHTAHWAHWAIQAHOAHNAHYAICAHSAHYAIAAHTAHZAIBAIZAHWAHXAHWAHSA
-HXAICAHTAHZAIDAIQAHOAHNAHYAICAHSAHYAIAAHTAICAICAIZAHWAHXAHWAHSAHXAIDAHTAHYAIBAIQ
-AHOAHNAHYAICAHSAHYAIDAHTAHVAIDAIZAHWAHXAHWAHSAHYAHVAHTAIEAHZAIQAHOAHNAHYAICAHS
-AHYAIDAHTAICAHWAIZAHWAHXAHWAHSAHYAHXAHTAHXAIAAIQAHOAHNAHYAICAHSAHZAHVAHTAHXAID
-AIZ'
-
-# joined = text.split("\n").join('')
-# fail unless joined.length % 3 == 0
-#
-# out = ''
-# joined.scan(/[A-Z]{3}/).each do |x|
-#   out += $dict[x]
-# end
-# puts out
+$dict = parse_dict 'dict/18766-2009.txt'
 
 def translate_line(line)
   fail unless line.length % 3 == 0
@@ -40,7 +16,7 @@ def translate_line(line)
   end.join('')
 end
 
-telegrams = Telegram.parse(File.read('samples/18766.txt'))
+telegrams = Telegram.parse(File.read('samples/18766-navtex.txt'))
 telegrams.each do |t|
   puts t.header
   puts translate_line telegrams[0].body.join('').gsub(/\n+/, '')
